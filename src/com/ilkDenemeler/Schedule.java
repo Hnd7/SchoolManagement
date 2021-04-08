@@ -1,18 +1,30 @@
 package com.ilkDenemeler;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class Schedule {
-    private Array[] firstLessons;
+    private Object[][] weeklySchedule = new  Object[7][5];
 
 
-    public Array[] getFirstLessons() {
-        return firstLessons;
+    public Object[][] getWeeklySchedule() {
+        System.out.println(Arrays.deepToString(this.weeklySchedule));
+        /*
+        for (int i = 0; i < this.weeklySchedule.length; i++)
+            System.out.println("Element at index " + i +
+                    " : "+ this.weeklySchedule[i]);*/
+        //System.out.println(weeklySchedule.);
+        return weeklySchedule;
     }
 
-    public void addFirstLesson(Lesson lesson){
-        //firstLessons.ad
+    public void addLesson(Lesson lesson) {
 
+        int hour = lesson.getLessonNumber();
+        int day= lesson.getDay();
+        this.weeklySchedule[hour][day]=lesson.getLessonInfo();
+        //System.out.println("Birinci değer"+lessonHour.getRank());
+        //this.weeklySchedule = weeklySchedule;
+        //weeklySchedule[][]
     }
 }
 

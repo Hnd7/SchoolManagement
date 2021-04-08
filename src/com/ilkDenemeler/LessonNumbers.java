@@ -9,6 +9,18 @@ public enum LessonNumbers {
     Alti(6,"Altıncı ders"),
     Yedi(7,"Yedinci ders");
 
+
+    private int rank;
+    private String  ders;
     LessonNumbers(int rank,String ders) {
+    }
+
+
+    public int getRank() {
+        return rank;
+    }
+
+    public String getDers() {
+        return ders;
     }
 }

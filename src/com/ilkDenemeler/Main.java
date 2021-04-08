@@ -43,6 +43,18 @@ public class Main {
         System.out.println(okul.schoolType.getSchoolTypeName());
         System.out.println(a.getAffiliatedInstitutionName());
 
+        Days denemegun = Days.Crs;
+        LessonNumbers saat = LessonNumbers.İki;
+
+        Lesson l = new Lesson("Hande",c,deneme,denemegun,saat);
+        Lesson l2= new Lesson("Zeynep",c,deneme,Days.Cuma,LessonNumbers.Uc);
+        //System.out.println(denemegun);
+        //System.out.println(saat);
+        Schedule schedule= new Schedule();
+        schedule.addLesson(l);
+        schedule.addLesson(l2);
+        System.out.println(schedule.getWeeklySchedule());
+
 
     }
 }

@@ -7,6 +7,16 @@ public enum Days {
     Prs(4,"Perşembe"),
     Cuma(5,"Cuma");
 
+    private int ID;
+    private  String day;
     Days(int ID, String day) {
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getDay() {
+        return day;
     }
 }

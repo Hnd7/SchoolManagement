@@ -8,16 +8,20 @@ public class Lesson {
     private ClassNumber classNumber;
     private ClassName className;
     private Days day;
+    private LessonNumbers lessonNumber;
 
-    public Lesson(String teacherName, ClassNumber classNumber, ClassName className,  Days day) {
+
+    public Lesson(String teacherName, ClassNumber classNumber, ClassName className,  Days day,LessonNumbers lessonNumber) {
         this.teacherName = teacherName;
         this.classNumber = classNumber;
         this.className = className;
         this.day=day;
+        this.lessonNumber=lessonNumber;
     }
 
     public Object[] getLessonInfo() {
-        Object[] LessonInfo = {teacherName, classNumber, className, day};
+        Lessons lesson= Lessons.Fizik;
+        Object[] LessonInfo = {teacherName, classNumber, className, lesson.getLessonsName()};
         return LessonInfo;
     }
 
@@ -52,5 +56,21 @@ public class Lesson {
 
     public Lessons getLesson() {
         return lesson;
+    }
+
+    public int getDay() {
+        return day.getID();
+    }
+
+    public void setDay(Days day) {
+        this.day = day;
+    }
+
+    public int getLessonNumber() {
+        return lessonNumber.getRank();
+    }
+
+    public void setLessonNumber(LessonNumbers lessonNumber) {
+        this.lessonNumber = lessonNumber;
     }
 }
