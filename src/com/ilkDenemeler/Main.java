@@ -1,13 +1,12 @@
 package com.ilkDenemeler;
 import java.time.LocalTime;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-        //SchoolType tip = SchoolType.Mesleki_Açık_Ogretim_Lisesi;
-       // School Bal = new School("BAL", "Beşiktaş",tip.toString());
         SchoolType s = SchoolType.Acik_Ogretim_Lisesi;
         SchoolType deneme1 = SchoolType.Sosyal_bilimler_lisesi;
         System.out.println(deneme1.getSchoolTypeID());
@@ -23,8 +22,26 @@ public class Main {
         ClassName deneme = ClassName.A;
         System.out.println(deneme.getClassName());
 
+        List<Student> studentlist=new ArrayList<Student>();
+        ClassObj classobj = new ClassObj(deneme,c,studentlist);
 
-        Guest ziyaretci= new Guest("hande", "sen","12345678910");
+
+        Student z = new Student("Zeynep","Bulut", "11931113156" , 1, c,deneme,classobj);
+        System.out.println(z.getName());
+        System.out.println(z.getSurname());
+        System.out.println(z.getPersonalId());
+        System.out.println(z.getStudentNumber());
+        System.out.println("Sınıf:"+z.getClassNumber());
+        System.out.println(z.getClassName());
+        System.out.println(z.getClass());
+
+        Guest zeynep = new Guest("Zeynep","Bulut", "57931113156");
+        System.out.println(zeynep.getEntranceDate());
+        System.out.println(zeynep.getEntranceTime());
+
+        School okul = new School("Deneme Lisesi","İstanbul", deneme1,a);
+        System.out.println(okul.schoolType.getSchoolTypeName());
+        System.out.println(a.getAffiliatedInstitutionName());
 
 
     }

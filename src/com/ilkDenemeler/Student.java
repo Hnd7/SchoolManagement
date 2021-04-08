@@ -2,12 +2,12 @@ package com.ilkDenemeler;
 
 public class Student extends  Person{
     private int studentNumber;
-    private int classNumber;
-    private String className;
+    private ClassNumber classNumber;
+    private ClassName className;
     private Role role=Role.Ogrenci;
     private ClassObj classObj;
 
-    public Student(String name, String surname, String personalId, int studentNumber,int classNumber, String className,ClassObj classObj) {
+    public Student(String name, String surname, String personalId, int studentNumber,ClassNumber classNumber, ClassName className,ClassObj classObj) {
         super(name, surname,  personalId);
         this.studentNumber = studentNumber;
         this.className = className;
@@ -24,19 +24,19 @@ public class Student extends  Person{
         this.studentNumber = studentNumber;
     }
 
-    public int getClassNumber() {
+    public ClassNumber getClassNumber() {
         return classNumber;
     }
 
-    public void setClassNumber(int classNumber) {
+    public void setClassNumber(ClassNumber classNumber) {
         this.classNumber = classNumber;
     }
 
-    public String getClassName() {
+    public ClassName getClassName() {
         return className;
     }
 
-    public void setClassName(String className) {
+    public void setClassName(ClassName className) {
         this.className = className;
     }
 
@@ -51,6 +51,7 @@ public class Student extends  Person{
     }
 
     public ClassObj getClassObj() {
+        System.out.println(this.classObj.getClassName());
         return classObj;
     }
 
