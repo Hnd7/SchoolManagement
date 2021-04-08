@@ -26,7 +26,7 @@ public class Main {
         ClassObj classobj = new ClassObj(deneme,c,studentlist);
 
 
-        Student z = new Student("Zeynep","Bulut", "11931113156" , 1, c,deneme,classobj);
+        Student z = new Student("Zeynep","Bulut", "11931113155" , 1, c,deneme,classobj);
         System.out.println(z.getName());
         System.out.println(z.getSurname());
         System.out.println(z.getPersonalId());
@@ -35,7 +35,7 @@ public class Main {
         System.out.println(z.getClassName());
         System.out.println(z.getClass());
 
-        Guest zeynep = new Guest("Zeynep","Bulut", "57931113156");
+        Guest zeynep = new Guest("Zeynep","Bulut", "72431963156");
         System.out.println(zeynep.getEntranceDate());
         System.out.println(zeynep.getEntranceTime());
 
