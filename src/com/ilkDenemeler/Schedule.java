@@ -18,9 +18,9 @@ public class Schedule {
     }
 
     public void addLesson(Lesson lesson) {
-
         int hour = lesson.getLessonNumber();
         int day= lesson.getDay();
+        System.out.println("Day:"+day+"\nHour:"+hour);
         this.weeklySchedule[hour][day]=lesson.getLessonInfo();
         //System.out.println("Birinci değer"+lessonHour.getRank());
         //this.weeklySchedule = weeklySchedule;

@@ -59,7 +59,7 @@ public class Lesson {
     }
 
     public int getDay() {
-        return day.getID();
+        return this.day.getID();
     }
 
     public void setDay(Days day) {
