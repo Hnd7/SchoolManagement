@@ -54,7 +54,7 @@ public class Main {
         schedule.addLesson(l);
         schedule.addLesson(l2);
         System.out.println(schedule.getWeeklySchedule());
-
+        System.out.println("DENEME12");
 
     }
 }
