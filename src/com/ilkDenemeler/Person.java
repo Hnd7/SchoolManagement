@@ -35,6 +35,8 @@ public abstract class Person {
     public void setPersonalId(String personalId) {
         this.personalId = personalId;
     }
+
+
 }
 
 

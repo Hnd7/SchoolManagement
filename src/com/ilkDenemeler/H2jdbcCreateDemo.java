@@ -36,9 +36,9 @@ public class H2jdbcCreateDemo {
                     " day VARCHAR(25) not NULL, " +
                     " lessonNumber VARCHAR(2) not NULL, " +
                     " PRIMARY KEY ( id ))";
-            stmt.executeUpdate(createScheduleTable);
-            String addSchedule = "INSERT INTO SCHEDULE VALUES (1,'Fizik','Kadriye','9','A','Pazartesi','1')";
-            stmt.executeUpdate(addSchedule);
+            //stmt.executeUpdate(createScheduleTable);
+            //String addSchedule = "INSERT INTO SCHEDULE VALUES (1,'Fizik','Kadriye','9','A','Pazartesi','1')";
+            //stmt.executeUpdate(addSchedule);
             System.out.println("Created table in given database...");
 
 

@@ -26,7 +26,7 @@ public class Main {
         ClassObj classobj = new ClassObj(deneme,c,studentlist);
 
 
-        Student z = new Student("Zeynep","Bulut", "11931113155" , 1, c,deneme,classobj);
+        Student z = new Student("Zeynep","Bulut", "11931113155",15,  c,deneme,classobj);
         System.out.println(z.getName());
         System.out.println(z.getSurname());
         System.out.println(z.getPersonalId());
