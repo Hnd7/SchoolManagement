@@ -59,7 +59,7 @@ public class Main {
 
         H2jdbcCreateDemo h2= new H2jdbcCreateDemo();
         h2.connection();
-        Student student= new Student("Aslı","Yörük","65478463214",ClassNumber.Hazırlık,ClassName.C,ClassNumber.Hazırlık.getClassNumberID()+ClassName.C.getClassName());
+        Student student= new Student("Sıla","Yörük","65478465555",ClassNumber.Hazırlık,ClassName.C);
 
         h2.insertSTUDENT(student);
         //h2.graduatingStudent("12366778963");

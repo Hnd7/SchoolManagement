@@ -6,14 +6,13 @@ public class Student extends  Person{
     private ClassName className;
     private Role role=Role.Ogrenci;
     private ClassObj classObj;
-    private String fullName;
     private int classID;
 
-    public Student(String name, String surname, String personalId, ClassNumber classNumber, ClassName className,String fullName) {
+    public Student(String name, String surname, String personalId, ClassNumber classNumber, ClassName className) {
         super(name, surname,  personalId);
         this.className = className;
         this.classNumber = classNumber;
-        this.fullName=fullName;
+
     }
 
 
