@@ -4,12 +4,12 @@ public enum ClassName {
     A("A"),
     B("B"),
     C("C"),
-    D("D"),
+    /*D("D"),
     E("E"),
     F("F"),
     G("G"),
     I("I"),
-    K("K");
+    K("K")*/;
 
     private String className;
 

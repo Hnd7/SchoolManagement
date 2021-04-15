@@ -5,6 +5,7 @@ public class School {
     public String address;
     public SchoolType schoolType;
     public AffiliatedInstitution affiliatedInstitution;
+    public int isActive=1;
 
     public School(String name, String address, SchoolType schoolType, AffiliatedInstitution affiliatedInstitution) {
         this.name = name;
@@ -46,8 +47,11 @@ public class School {
     }
 
 
+    public int getIsActive() {
+        return isActive;
+    }
 
-
-
-
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
+    }
 }

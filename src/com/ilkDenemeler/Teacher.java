@@ -1,6 +1,9 @@
 package com.ilkDenemeler;
 
 public class Teacher extends Person {
+    private String shiftStartTime="09.00";
+    private String shiftEndTime="17.00";
+    private int salary;
     private boolean administrativeStaff=false;
     private Lessons lesson;
     private Role mission;

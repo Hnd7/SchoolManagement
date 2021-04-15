@@ -1,7 +1,7 @@
 package com.ilkDenemeler;
 
 public enum ClassNumber {
-    Hazırlık(0),
+    Hazırlık(13),
     Dokuz(9),
     On(10),
     Onbir(11),

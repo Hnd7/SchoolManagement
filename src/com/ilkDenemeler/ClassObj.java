@@ -8,6 +8,7 @@ public class ClassObj {
     private List<Student> studentList;
     private final int capacity=30;
 
+
     public ClassObj(ClassName className, ClassNumber classNumber, List<Student> studentList) {
         this.className = className;
         this.classNumber = classNumber;
