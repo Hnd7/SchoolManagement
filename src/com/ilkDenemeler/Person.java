@@ -11,6 +11,9 @@ public abstract class Person {
         this.personalId = personalId;
     }
 
+    public Person() {
+    }
+
 
     public String getName() {
         return name;

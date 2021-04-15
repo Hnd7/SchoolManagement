@@ -89,27 +89,35 @@ public class H2jdbcCreateDemo {
         } else System.out.println("Sınıf kapasitesi dolu.");
     }
 
-    public void graduatingStudent(String personalId) throws SQLException {
-        Role r = Role.Mezun;
-        int mezun = r.getRoleID();
+    public void deleteStudent(String personalId) throws SQLException {
+        Role r = Role.Silindi;
+        int silindi = r.getRoleID();
         String sorgu = "UPDATE STUDENT SET ROLEID=? WHERE PERSONALID=?";
+        String sinifguncelle = "UPDATE STUDENT SET CLASSID=15 WHERE PERSONALID=?";
+        PreparedStatement newstmt = this.conn.prepareStatement(sinifguncelle);
+        newstmt.setString(1, personalId);
+        newstmt.executeUpdate();
         PreparedStatement stmt = this.conn.prepareStatement(sorgu);
-        stmt.setInt(1, mezun);
+        stmt.setInt(1, silindi);
         stmt.setString(2, personalId);
         int i = stmt.executeUpdate();
         System.out.println(i + " records updated");
         conn.close();
     }
 
-    public void deleteStudent(String personalId) throws SQLException {
-        Role r = Role.Silindi;
-        int silindi = r.getRoleID();
+    public void graduatingStudent(String personalId) throws SQLException {
+        Role r = Role.Mezun;
+        int mezun = r.getRoleID();
         String sorgu = "UPDATE STUDENT SET ROLEID=? WHERE PERSONALID=?";
+        String sinifguncelle = "UPDATE STUDENT SET CLASSID=16 WHERE PERSONALID=?";
+        PreparedStatement newstmt = this.conn.prepareStatement(sinifguncelle);
+        newstmt.setString(1, personalId);
+        newstmt.executeUpdate();
         PreparedStatement stmt = this.conn.prepareStatement(sorgu);
-        stmt.setInt(1, silindi);
+        stmt.setInt(1, mezun);
         stmt.setString(2, personalId);
         int i = stmt.executeUpdate();
-        System.out.println(i + " Öğrenci Silindi");
+        System.out.println(i + " records updated");
         conn.close();
     }
 
@@ -230,7 +238,7 @@ public class H2jdbcCreateDemo {
         stmt.setString(1, school.getName());
         stmt.setString(2, school.getAddress());
         stmt.setInt(3, school.getIsActive());
-        stmt.setInt(4, school.getAffiliatedInstitution().getAffiliatedInstitutionID());
+        stmt.setInt(4, school.getAffiliatedInstitution().getAffiliatedInstitutionId());
         stmt.setInt(5, school.getSchoolType().getSchoolTypeID());
         int i = stmt.executeUpdate();
         System.out.println(i + " records inserted");
@@ -240,14 +248,107 @@ public class H2jdbcCreateDemo {
     }
 
     public void deactivateSchool(School school) throws SQLException {
-        String sorgu = "UPDATE SCHOOL SET ISACTIVE=? WHERE SCHOOLNAME=?";
+        String sorgu = "UPDATE SCHOOL SET ISACTIVE=0 WHERE SCHOOLNAME=?";
         PreparedStatement stmt = this.conn.prepareStatement(sorgu);
-        stmt.setInt(1, 0);
         school.setIsActive(0);
-        stmt.setString(2, school.getName());
+        stmt.setString(1, school.getName());
         int i = stmt.executeUpdate();
         System.out.println(i + " records updated");
         conn.close();
+    }
+
+    public void lisfOfClass() throws SQLException {
+        List<ClassObj> classList = new ArrayList<ClassObj>();
+
+        String sorgu = "SELECT * FROM CLASSOBJ";
+        PreparedStatement stmt;
+        stmt = this.conn.prepareStatement(sorgu);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            ClassObj classObj = new ClassObj();
+
+            int classId = rs.getInt(1);
+            classObj.setClassId(classId);
+
+            int classNumber = rs.getInt(2);
+            classObj.setClassNumbers(classNumber);
+
+            String className = rs.getString(3);
+            classObj.setClassNames(className);
+
+            classList.add(classObj);
+
+            System.out.println("Class id : " + classObj.getClassId() + " , number : " + classObj.getClassNumbers()
+                    + " , name : " + classObj.getClassNames());
+        }
+    }
+
+    public void listOfStudent() throws SQLException {
+        List<Student> studentlist = new ArrayList<Student>();
+
+        String sorgu = "SELECT * FROM STUDENT WHERE ROLEID=2";
+        PreparedStatement stmt;
+        stmt = this.conn.prepareStatement(sorgu);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Student s = new Student();
+
+            int studentNum = rs.getInt(1);
+            s.setStudentNumber(studentNum);
+
+            String studentName = rs.getString(2);
+            s.setName(studentName);
+
+            String studentSurname = rs.getString(3);
+            s.setSurname(studentSurname);
+
+            String personalId = rs.getString(4);
+            s.setPersonalId(personalId);
+
+            int classId = rs.getInt(5);
+            s.setClassID(classId);
+
+            studentlist.add(s);
+
+            System.out.println("Student Number : " + s.getStudentNumber() + " , name : " + s.getName() + " , surname : "
+                    + s.getSurname() + " , personalId : " + s.getPersonalId() + " , classId : " + s.getClassID());
+        }
+    }
+
+    public void lisfOfAllLessonPlan() throws SQLException {
+        List<Lesson> lessonList = new ArrayList<Lesson>();
+
+        String sorgu = "SELECT * FROM LESSONSCHEDULE";
+        PreparedStatement stmt;
+        stmt = this.conn.prepareStatement(sorgu);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Lesson lessonObj = new Lesson();
+
+            int lessonScheduleId = rs.getInt(1);
+            lessonObj.setLessonScheduleId(lessonScheduleId);
+
+            int lessonID = rs.getInt(2);
+            lessonObj.setLessonId(lessonID);
+
+            int teacherId = rs.getInt(3);
+            lessonObj.setTeacherId(teacherId);
+
+            int classId = rs.getInt(4);
+            lessonObj.setClassId(classId);
+
+            int dayId = rs.getInt(5);
+            lessonObj.setDayId(dayId);
+
+            int lessonNumber = rs.getInt(6);
+            lessonObj.setLessonNumbers(lessonNumber);
+
+            lessonList.add(lessonObj);
+
+            System.out.println("lessonScheduleId: " + lessonObj.getLessonScheduleId()+ " , lessonID : " + lessonObj.getLessonId()
+                    + " , teacherId : " + lessonObj.getTeacherId()+ " , classId : " + lessonObj.getClassId()+" , dayId : " + lessonObj.getDayId()
+                    + " , lessonNumber : " + lessonObj.getLessonNumbers());
+        }
     }
 
 

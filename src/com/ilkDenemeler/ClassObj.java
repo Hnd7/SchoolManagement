@@ -7,12 +7,18 @@ public class ClassObj {
     private ClassNumber classNumber;
     private List<Student> studentList;
     private final int capacity=30;
+    private int classId;
+    private int classNumbers;
+    private String classNames;
 
 
     public ClassObj(ClassName className, ClassNumber classNumber, List<Student> studentList) {
         this.className = className;
         this.classNumber = classNumber;
         this.studentList = studentList;
+    }
+
+    public ClassObj() {
     }
     //TODO DERS PROGRAMI EKLE
 
@@ -59,4 +65,27 @@ public class ClassObj {
         }
     }
 
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
+    }
+
+    public int getClassNumbers() {
+        return classNumbers;
+    }
+
+    public void setClassNumbers(int classNumbers) {
+        this.classNumbers = classNumbers;
+    }
+
+    public String getClassNames() {
+        return classNames;
+    }
+
+    public void setClassNames(String classNames) {
+        this.classNames = classNames;
+    }
 }

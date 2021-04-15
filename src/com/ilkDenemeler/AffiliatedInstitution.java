@@ -13,7 +13,7 @@ public enum AffiliatedInstitution {
         this.affiliatedInstitutionName = affiliatedInstitutionName;
     }
 
-    public int getAffiliatedInstitutionID() {
+    public int getAffiliatedInstitutionId() {
         return this.affiliatedInstitutionID;
     }
     public String getAffiliatedInstitutionName() {

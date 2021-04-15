@@ -6,13 +6,15 @@ public class Student extends  Person{
     private ClassName className;
     private Role role=Role.Ogrenci;
     private ClassObj classObj;
-    private int classID;
+    private int classId;
 
     public Student(String name, String surname, String personalId, ClassNumber classNumber, ClassName className) {
         super(name, surname,  personalId);
         this.className = className;
         this.classNumber = classNumber;
-
+    }
+    public Student(){
+        super();
     }
 
 
@@ -68,7 +70,12 @@ public class Student extends  Person{
         return role;
     }
 
+
     public int getClassID() {
-        return classID;
+        return classId;
+    }
+
+    public void setClassID(int classId) {
+        this.classId = classId;
     }
 }
