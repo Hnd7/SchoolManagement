@@ -16,6 +16,7 @@ public class Lesson {
     private int dayId;
     private int lessonNumbers;
     private int teacherId;
+    private String lessonName;
 
 
     public Lesson(String teacherName, ClassNumber classNumber, ClassName className,  Days day,LessonNumbers lessonNumber) {
@@ -29,9 +30,24 @@ public class Lesson {
     public Lesson() {
     }
 
+    public Lesson(int lessonScheduleId, int lessonId, int teacherId, int classId, int dayId, int lessonNumbers,String teacherName,String lessonName) {
+        this.lessonScheduleId = lessonScheduleId;
+        this.lessonId = lessonId;
+        this.classId = classId;
+        this.dayId = dayId;
+        this.lessonNumbers = lessonNumbers;
+        this.teacherId = teacherId;
+        this.teacherName=teacherName;
+        this.lessonName=lessonName;
+    }
+
     public Object[] getLessonInfo() {
         Lessons lesson= Lessons.Fizik;
         Object[] LessonInfo = {teacherName, classNumber, className, lesson.getLessonsName()};
+        return LessonInfo;
+    }
+    public Object[] getLessonInfoFromDB() {
+        Object[] LessonInfo = {teacherName,lessonName};
         return LessonInfo;
     }
 
@@ -71,6 +87,7 @@ public class Lesson {
     public int getDay() {
         return this.day.getID();
     }
+    public int getintDay(){return this.dayId;}
 
     public void setDay(Days day) {
         this.day = day;
@@ -78,6 +95,9 @@ public class Lesson {
 
     public int getLessonNumber() {
         return lessonNumber.getRank();
+    }
+    public int getintLessonNumber() {
+        return this.lessonNumbers;
     }
 
     public void setLessonNumber(LessonNumbers lessonNumber) {

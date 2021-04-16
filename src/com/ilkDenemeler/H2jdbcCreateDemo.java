@@ -1,6 +1,8 @@
 package com.ilkDenemeler;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,36 +133,74 @@ public class H2jdbcCreateDemo {
         conn.close();
     }
 
-    public void insertGuest(String personalId, String name, String surname, String entranceDate, String entranceTime) {
+    public void insertGuest(Guest guest) throws SQLException {
         String sorgu = "INSERT INTO GUEST(PERSONALID,NAME,SURNAME,ENTRANCEDATE,ENTRANCETIME) VALUES(?,?,?,?,?)";
+        String checkinDate = guest.getCheckinDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+        String checkinTime = guest.getCheckinTime().format(dtf);
         PreparedStatement stmt;
-        try {
-            stmt = this.conn.prepareStatement(sorgu);
-            stmt.setString(1, personalId);
-            stmt.setString(2, name);
-            stmt.setString(3, surname);
-            stmt.setString(4, entranceDate);
-            stmt.setString(5, entranceTime);
-            int i = stmt.executeUpdate();
-            System.out.println(i + " records inserted");
 
-            conn.close();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        stmt = this.conn.prepareStatement(sorgu);
+        stmt.setString(1, guest.getPersonalId());
+        stmt.setString(2, guest.getName());
+        stmt.setString(3, guest.getSurname());
+        stmt.setString(4, checkinDate);
+        stmt.setString(5, checkinTime);
+        int i = stmt.executeUpdate();
+        System.out.println(i + " records inserted");
+
+        conn.close();
+
     }
 
-    public void exitGuest(String personalId, String exitDate, String exitTime) throws SQLException {
+    public void exitGuest(Guest guest) throws SQLException {
         String sorgu = "UPDATE GUEST SET EXITDATE=?, EXITTIME=? WHERE GUESTID = (SELECT MAX(GUESTID) FROM GUEST WHERE PERSONALID=?)";
+        String exitDate = guest.getCheckoutDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+        String exitTime = guest.getCheckoutTime().format(dtf);
 
         PreparedStatement stmt = this.conn.prepareStatement(sorgu);
         stmt.setString(1, exitDate);
         stmt.setString(2, exitTime);
-        stmt.setString(3, personalId);
+        stmt.setString(3, guest.getPersonalId());
         int i = stmt.executeUpdate();
-        System.out.println(i + " Ziyaretçi çıkış yaptı.");
+        System.out.println(i + " records updated");
         conn.close();
+    }
+
+    public void guestListOfDay(LocalDate checkinDate) throws SQLException {
+        String date = checkinDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String sorgu = "SELECT * FROM GUEST WHERE ENTRANCEDATE=?";
+        PreparedStatement stmt;
+        stmt = this.conn.prepareStatement(sorgu);
+        stmt.setString(1, date);
+        ResultSet rs = stmt.executeQuery();
+        List<Guest> guestList = new ArrayList<Guest>();
+        while (rs.next()) {
+            Guest g = new Guest();
+
+            int guestId = rs.getInt(1);
+            g.setGuestId(guestId);
+
+            String name = rs.getString(2);
+            g.setName(name);
+
+            String surname = rs.getString(3);
+            g.setSurname(surname);
+
+            String personalId = rs.getString(4);
+            g.setPersonalId(personalId);
+
+            String checkinTime = rs.getString(6);
+            g.setCheckinTimes(checkinTime);
+
+            guestList.add(g);
+
+            System.out.println(
+                    "GuestId : " + g.getGuestId() + " , name : " + g.getName() + " , surname : " + g.getSurname()
+                            + " , personalId : " + g.getPersonalId() + " , entrance time : " + g.getCheckinTimes());
+
+        }
     }
 
     public void insertLessonToSchedule(int LessonID, int teacherID, int classID, int dayID, int LessonNumber) throws SQLException {
@@ -345,64 +385,113 @@ public class H2jdbcCreateDemo {
 
             lessonList.add(lessonObj);
 
-            System.out.println("lessonScheduleId: " + lessonObj.getLessonScheduleId()+ " , lessonID : " + lessonObj.getLessonId()
-                    + " , teacherId : " + lessonObj.getTeacherId()+ " , classId : " + lessonObj.getClassId()+" , dayId : " + lessonObj.getDayId()
+            System.out.println("lessonScheduleId: " + lessonObj.getLessonScheduleId() + " , lessonID : " + lessonObj.getLessonId()
+                    + " , teacherId : " + lessonObj.getTeacherId() + " , classId : " + lessonObj.getClassId() + " , dayId : " + lessonObj.getDayId()
                     + " , lessonNumber : " + lessonObj.getLessonNumbers());
         }
     }
 
+    public void listOfStudentinClass(int classNumber, String className) throws SQLException {
+        List<Student> studentlistofClass = new ArrayList<Student>();
 
-    /*
-    public static void main(String[] args) {
-        Connection conn = null;
-        Statement stmt = null;
-        try {
-            // STEP 1: Register JDBC driver
-            Class.forName(JDBC_DRIVER);
+        String sorgu = "SELECT * FROM STUDENT WHERE CLASSID = (SELECT CLASSID FROM CLASSOBJ WHERE CLASSNUMBER =? AND CLASSNAME=?)";
 
-            //STEP 2: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+        PreparedStatement stmt;
+        stmt = this.conn.prepareStatement(sorgu);
+        stmt.setInt(1, classNumber);
+        stmt.setString(2, className);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Student s = new Student();
 
-            //STEP 3: Execute a query
-            System.out.println("Creating table in given database...");
-            stmt = conn.createStatement();
-            String createScheduleTable =  "CREATE TABLE SCHEDULE " +
-                    "(id INTEGER not NULL, " +
-                    " lessonName VARCHAR(25) not NULL, " +
-                    " teacherName VARCHAR(255) not NULL, " +
-                    " classNumber VARCHAR(2) not NULL, " +
-                    " className VARCHAR(2) not NULL, " +
-                    " day VARCHAR(25) not NULL, " +
-                    " lessonNumber VARCHAR(2) not NULL, " +
-                    " PRIMARY KEY ( id ))";
-            //stmt.executeUpdate(createScheduleTable);
-            //String addSchedule = "INSERT INTO SCHEDULE VALUES (1,'Fizik','Kadriye','9','A','Pazartesi','1')";
-            //stmt.executeUpdate(addSchedule);
-            System.out.println("Created table in given database...");
+            int studentNum = rs.getInt(1);
+            s.setStudentNumber(studentNum);
+
+            String studentName = rs.getString(2);
+            s.setName(studentName);
+
+            String studentSurname = rs.getString(3);
+            s.setSurname(studentSurname);
+
+            String personalId = rs.getString(4);
+            s.setPersonalId(personalId);
+
+            int classId = rs.getInt(5);
+            s.setClassID(classId);
+
+            studentlistofClass.add(s);
+
+            System.out.println("Student Number : " + s.getStudentNumber() + " , name : " + s.getName() + " , surname : "
+                    + s.getSurname() + " , personalId : " + s.getPersonalId() + " , classId : " + s.getClassID());
+
+        }
+    }
+
+    public void listOfLessonofTeacher(Teacher teacher) throws SQLException {
+        String sorgu = "SELECT * FROM LESSONSCHEDULE WHERE TEACHERID = (SELECT STAFFID FROM PERSONALS WHERE PERSONALID=?)";
+        List<Lesson> lessonList = new ArrayList<Lesson>();
+        PreparedStatement stmt;
+        stmt = this.conn.prepareStatement(sorgu);
+        stmt.setString(1, teacher.getPersonalId());
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Lesson lessonObj = new Lesson();
+
+            int lessonScheduleId = rs.getInt(1);
+            lessonObj.setLessonScheduleId(lessonScheduleId);
+
+            int lessonID = rs.getInt(2);
+            lessonObj.setLessonId(lessonID);
+
+            int teacherId = rs.getInt(3);
+            lessonObj.setTeacherId(teacherId);
+
+            int classId = rs.getInt(4);
+            lessonObj.setClassId(classId);
+
+            int dayId = rs.getInt(5);
+            lessonObj.setDayId(dayId);
+
+            int lessonNumber = rs.getInt(6);
+            lessonObj.setLessonNumbers(lessonNumber);
+
+            lessonList.add(lessonObj);
+
+            System.out.println("lessonScheduleId: " + lessonObj.getLessonScheduleId() + " , lessonID : " + lessonObj.getLessonId()
+                    + " , teacherId : " + lessonObj.getTeacherId() + " , classId : " + lessonObj.getClassId() + " , dayId : " + lessonObj.getDayId()
+                    + " , lessonNumber : " + lessonObj.getLessonNumbers());
+
+        }
+    }
+
+    public void getClassSchedule(int classID) throws SQLException {
+        String jointquery = "SELECT LESSONSCHEDULEID ,LESSONSCHEDULE .LESSONID ,TEACHERID ,CLASSID ,DAYID ,LESSONNUMBER ,LESSONLIST.LESSONNAME ,PERSONALS.NAME  \n" +
+                "FROM LESSONSCHEDULE \n" +
+                "JOIN PERSONALS \n" +
+                "ON LESSONSCHEDULE .TEACHERID = PERSONALS .STAFFID \n" +
+                "JOIN LESSONLIST \n" +
+                "ON LESSONSCHEDULE.LESSONID =LESSONLIST.LESSONID \n" +
+                "WHERE LESSONSCHEDULE.CLASSID =?";
+        PreparedStatement stmt;
+        stmt = this.conn.prepareStatement(jointquery);
+        stmt.setInt(1, classID);
+        ResultSet rs = stmt.executeQuery();
+        Schedule schedule = new Schedule();
+        while (rs.next()) {
+            int scheduleId = rs.getInt(1);
+            int lessonId = rs.getInt(2);
+            int teacherId = rs.getInt(3);
+            int classId = rs.getInt(4);
+            int dayId = rs.getInt(5);
+            int lessonNumber = rs.getInt(6);
+            String lessonname = rs.getString(7);
+            String tachername = rs.getString(8);
+
+            Lesson lesson = new Lesson(scheduleId, lessonId, teacherId, classId, dayId, lessonNumber, tachername, lessonname);
+            schedule.addLessonFromDB(lesson);
+        }
+        schedule.getWeeklySchedule();
+    }
 
 
-            // STEP 4: Clean-up environment
-            stmt.close();
-            conn.close();
-        } catch(SQLException se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        } catch(Exception e) {
-            //Handle errors for Class.forName
-            e.printStackTrace();
-        } finally {
-            //finally block used to close resources
-            try{
-                if(stmt!=null) stmt.close();
-            } catch(SQLException se2) {
-            } // nothing we can do
-            try {
-                if(conn!=null) conn.close();
-            } catch(SQLException se){
-                se.printStackTrace();
-            } //end finally try
-        } //end try
-        System.out.println("Goodbye!");
-    }*/
 }

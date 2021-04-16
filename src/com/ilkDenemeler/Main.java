@@ -59,15 +59,15 @@ public class Main {
 
         H2jdbcCreateDemo h2= new H2jdbcCreateDemo();
         h2.connection();
-        Student student= new Student("Sıla","Yörük","65478465555",ClassNumber.Hazırlık,ClassName.C);
-
-        h2.insertSTUDENT(student);
+        //Student student= new Student("Sıla","Yörük","65478465555",ClassNumber.Hazırlık,ClassName.C);
+        //h2.insertSTUDENT(student);
         //h2.graduatingStudent("12366778963");
         //h2.insertGuest("14587632598","Oktay","Samur","15-04-2021,","14.30");
         //h2.exitGuest("14587632598","15-04-2021","15.00");
         //h2.insertPersonal("Taha","Aşçıoğulları","14782178965",Role.Guvenlik,"09.00","16.00",4500);
         //h2.insertLessonToSchedule(2,1,9,4,5);
         //h2.updateSchedule(1,"CLASSID",1);
+        h2.getClassSchedule(1);
 
     }
 }

@@ -8,6 +8,12 @@ public class Guest extends Person{
     private LocalDate exitDate;
     private LocalTime exitTime;
 
+    public String checkinDates;
+    public String checkinTimes;
+    public String checkoutDates;
+    public String checkoutTimes;
+    public int guestId;
+
 
     public Guest(String name, String surname, String pesonalId) {
         super(name, surname, pesonalId);
@@ -15,6 +21,10 @@ public class Guest extends Person{
         //LocalTime entranceTime = LocalTime.now();
         this.entranceDate = getDate();
         this.entranceTime = getTime();
+    }
+
+    public Guest() {
+        super();
     }
 
     public LocalDate getDate(){
@@ -26,18 +36,18 @@ public class Guest extends Person{
         return currentTime;
     }
 
-    public LocalDate getEntranceDate() {
+    public LocalDate getCheckinDate() {
         System.out.println( entranceDate);
         return entranceDate;
     }
 
 
-    public LocalTime getEntranceTime() {
+    public LocalTime getCheckinTime() {
         System.out.println(entranceTime);
         return entranceTime;
     }
 
-    public LocalDate getExitDate() {
+    public LocalDate getCheckoutDate() {
         System.out.println(this.exitDate);
         return exitDate;
     }
@@ -46,12 +56,60 @@ public class Guest extends Person{
         this.exitDate=getDate();
     }
 
-    public LocalTime getExitTime() {
+    public LocalTime getCheckoutTime() {
         System.out.println(this.exitTime);
         return exitTime;
     }
 
     public void setExitTime(LocalTime exitTime) {
         this.exitTime = getTime();
+    }
+
+    public int getGuestId() {
+        return guestId;
+    }
+
+    public void setGuestId(int guestId) {
+        this.guestId = guestId;
+    }
+
+    public void setEntranceDate(LocalDate entranceDate) {
+        this.entranceDate = entranceDate;
+    }
+
+    public void setEntranceTime(LocalTime entranceTime) {
+        this.entranceTime = entranceTime;
+    }
+
+    public String getCheckinDates() {
+        return checkinDates;
+    }
+
+    public void setCheckinDates(String checkinDates) {
+        this.checkinDates = checkinDates;
+    }
+
+    public String getCheckinTimes() {
+        return checkinTimes;
+    }
+
+    public void setCheckinTimes(String checkinTimes) {
+        this.checkinTimes = checkinTimes;
+    }
+
+    public String getCheckoutDates() {
+        return checkoutDates;
+    }
+
+    public void setCheckoutDates(String checkoutDates) {
+        this.checkoutDates = checkoutDates;
+    }
+
+    public String getCheckoutTimes() {
+        return checkoutTimes;
+    }
+
+    public void setCheckoutTimes(String checkoutTimes) {
+        this.checkoutTimes = checkoutTimes;
     }
 }
