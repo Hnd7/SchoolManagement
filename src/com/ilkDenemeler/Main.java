@@ -67,7 +67,9 @@ public class Main {
         //h2.insertPersonal("Taha","Aşçıoğulları","14782178965",Role.Guvenlik,"09.00","16.00",4500);
         //h2.insertLessonToSchedule(2,1,9,4,5);
         //h2.updateSchedule(1,"CLASSID",1);
-        h2.getClassSchedule(1);
+        //h2.getClassSchedule(1);
+
+        //h2.listOfLessonofTeacher();
 
     }
 }
